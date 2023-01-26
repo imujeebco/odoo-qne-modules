@@ -1,0 +1,177 @@
+<odoo>
+  <data>
+
+
+
+        <record id="purchase_report_list" model="ir.ui.view">
+            <field name="name">purchase.report.list</field>
+            <field name="model">purchase.report</field>
+            <field name="arch" type="xml">
+                <tree string="Purchase Report">
+                    <field name="date_order" />
+                    <field name="state"/>
+                    <field name="product_id" />
+                    <field name="partner_id" />
+                    <field name="date_approve"/>
+                    <field name="user_id"/>
+                    <field name="delay" />
+                    <field name="delay_pass"/>
+                    <field name="price_total" />
+                    <field name="price_average" />
+                    <field name="product_tmpl_id"/>
+                    <field name="commercial_partner_id"/>
+                    <field name="weight" />
+                    <field name="volume"/>
+                    <field name="order_id" />
+                    <field name="untaxed_total" />
+                    <field name="qty_ordered"/>
+                    <field name="qty_received"/>
+                    <field name="qty_billed"/>
+                    <field name="qty_to_be_billed"/>
+                </tree>
+            </field>
+        </record>
+
+          <record id="purchase.action_purchase_order_report_all" model="ir.actions.act_window">
+        <field name="name">Purchase Analysis</field>
+        <field name="res_model">purchase.report</field>
+        <field name="view_mode">graph,pivot,tree</field>
+        <field name="view_id"></field>  <!-- force empty -->
+        <field name="help">Purchase Analysis allows you to easily check and analyse your company purchase history and performance. From this menu you can track your negotiation performance, the delivery performance of your vendors, etc.</field>
+        <field name="target">current</field>
+    </record>
+
+ <record id="stock_quant_inherit_tree_read_quantity" model="ir.ui.view">
+        <field name="name">stock.quant.tree.inherit.read_quantity</field>
+        <field name="model">stock.quant</field>
+        <field name="inherit_id" ref="stock.view_stock_quant_tree_editable"/>
+        <field name="arch" type="xml">
+               <xpath expr="//field[@name='inventory_quantity']" position="attributes">
+                <attribute name="readonly">1</attribute>
+               </xpath>
+        </field></record>
+
+
+    <record id="stock_quant_inherit_form_distributor" model="ir.ui.view">
+        <field name="name">stock.quant.form.inherit.distributor</field>
+        <field name="model">stock.quant</field>
+        <field name="inherit_id" ref="stock.view_stock_quant_tree_editable"/>
+        <field name="arch" type="xml">
+               <xpath expr="//field[@name='product_id']" position="after">
+                <field name="warehouse_id"/>
+               </xpath>
+        </field></record>
+
+      <record id="partner_inherit_form_distributor" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit.distributor</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+               <xpath expr="//field[@name='category_id']" position="after">
+                <field name="distributor_type"/>
+                <field name="premier_cust_id"/>
+                <field name="warehouse_id"/>
+               </xpath></field></record>
+
+        <record id="vendor_prices_form_view_ext" model="ir.ui.view">
+        <field name="name">product.product.form.inherit.vendor_prices</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+               <xpath expr="//field[@name='categ_id']" position="after">
+                <field name="market_retail_price"/>
+            </xpath>
+
+             <xpath expr="//page[4]" position="after">
+                <page  string="Vendor Prices" >
+                    <field name="vendor_price_ids" >
+                        <tree string="Prices" editable="bottom">
+                            <field name="product_vender_id" />
+                            <field name="product_sale_price" />
+                            <field name="product_cost_price" />
+                            <field name="market_retail_price" />
+                            <field name="product_id" invisible="1"/>
+                            <field name="is_active" />
+                            <button name="activate" string="Active" type="object" class="oe_highlight"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+        <record id="api_requests_form" model="ir.ui.view">
+            <field name="name">api.requests.form.view</field>
+            <field name="model">api.requests</field>
+            <field name="arch" type="xml">
+                <form string="API Requests">
+                    <sheet>
+                        <header>
+                            <button name="re_try" string="Re-try" type="object" class="oe_highlight" attrs="{'invisible': [('done', '=',True)]}"/>
+                        </header>
+                        <group>
+                            <group>
+                                <field name="name" />
+                                <field name="call" />
+                                <field name="data" />
+                                <field name="done" />
+                                <field name="type" />
+                                <field name="error" />
+<!--                                <field name="part_number" />-->
+                            </group>
+                            <group>
+                            </group>
+                        </group>
+
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="api_requests_list" model="ir.ui.view">
+            <field name="name">api.requests.list</field>
+            <field name="model">api.requests</field>
+            <field name="arch" type="xml">
+                <tree string="API Requests">
+                                <field name="name" />
+                                <field name="call" />
+                                <field name="data" />
+                                <field name="done" />
+                                <field name="type" />
+                                <field name="error" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_api_requests" model="ir.actions.act_window">
+            <field name="name">API Requests</field>
+            <field name="res_model">api.requests</field>
+             <field name="view_id" ref="api_requests_list"/>
+            <field name='view_mode'>tree,form</field>
+        </record>
+        <menuitem
+            name="API requests"
+            action='action_api_requests'
+            id='api_requests_menu'
+            parent="contacts.res_partner_menu_config"/>
+            
+            
+        <record id="action_vendor_prices_setup" model="ir.actions.act_window">
+            <field name="name">vendor.prices.setup_</field>
+            <field name="res_model">vendor.prices.setup</field>
+<!--             <field name="view_id" ref="ar_transaction_list"/>-->
+            <field name='view_mode'>tree,form</field>
+        </record>
+        <menuitem
+            name="vendor.prices.setup"
+            action='action_vendor_prices_setup'
+            id='menu_vendor_prices_setup'
+            parent="contacts.res_partner_menu_config"/>
+            
+            
+            
+            
+            
+  </data>
+</odoo>

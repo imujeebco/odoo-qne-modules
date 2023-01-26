@@ -1,0 +1,12 @@
+1) Version: 14.0.0.1 | Date : 6/11/2020
+-->  Fixed traceback issue, when do not upload the file and click on import.
+-->  Fixed traceback issue of wrong date format in payment.
+-->  Fixed traceback issue, when date is not given in payment XLS file.
+
+2) Version: 14.0.0.2 | Date : 30/12/2020
+-->  For Import Payment, add selection for "Payment Stage".
+
+=> 14.0.0.3 : Add French, Spanish , Arabic and Dutch translation in module also improved an index.
+
+=> 14.0.0.4 :Add a new Excel button for(Download Sample Excel file)
+

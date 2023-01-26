@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_stock_rotation">
+        <t t-call="web.html_container">
+        <t t-call="web.external_layout">
+            <div class="page">
+                <h3 class="text-center">Stock Rotation/Movement of Products</h3>
+                <div class="text-right">
+                    <span>
+                        <strong>From Date: </strong> <span t-esc="data['form'].get('date_from')"/>
+                        <strong>To Date: </strong> <span t-esc="data['form'].get('date_to')"/>
+                    </span>
+                </div>
+                <t t-if="stockMoves">
+                    <table class="table table-condensed" style="border:solid 1px;">
+                        <thead>
+                            <tr style="border:solid 1px; background-color:#DCDCDC">
+                                <th style="border-right:solid 1px; border-bottom:solid 1px;">Product ID</th>
+                                <th style="border-right:solid 1px; border-bottom:solid 1px;">Product Name</th>
+                                <th style="border-right:solid 1px; border-bottom:solid 1px;">Internal Ref.</th>
+                                <th style="border-right:solid 1px; border-bottom:solid 1px;">Cost Price</th>
+                                <th style="border-right:solid 1px; border-bottom:solid 1px;">Sale Price</th>
+                                <th style="border-right:solid 1px; border-bottom:solid 1px;">Opening</th>
+                                <th style="border-right:solid 1px; border-bottom:solid 1px;">Incoming</th>
+                                <th style="border-right:solid 1px; border-bottom:solid 1px;">Outgoing</th>
+                                <th style="border-right:solid 1px; border-bottom:solid 1px;">Internal</th>
+                                <th style="border-right:solid 1px; border-bottom:solid 1px;">Purchase Count</th>
+                                <th style="border-right:solid 1px; border-bottom:solid 1px;">Last Purchase Date</th>
+                                <th style="border-right:solid 1px; border-bottom:solid 1px;">Sale Count</th>
+                                <th style="border-right:solid 1px; border-bottom:solid 1px;">Last Sale Date</th>
+                                <th style="border-right:solid 1px; border-bottom:solid 1px;">Ending</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="stockMoves" t-as="warehouse" style="border-bottom:solid 1px;">
+                                <tr style="background-color:#FCFCFC">
+                                    <td colspan="14">
+                                        <strong>Warehouse: <span t-esc="warehouse"/></strong>
+                                    </td>
+                                </tr>
+                                <t t-foreach="stockMoves[warehouse]" t-as="category">
+                                    <tr style="background-color:#FCFCFC">
+                                        <td colspan="14">
+                                            <strong>Category: <span t-esc="category"/></strong>
+                                        </td>
+                                    </tr>
+                                    <tr t-foreach="stockMoves[warehouse][category]" t-as="line">
+                                        <td style="border-right:solid 1px;">
+                                            <span t-esc="line['product_id']"/>
+                                        </td>
+                                        <td style="border-right:solid 1px;">
+                                            <span t-esc="line['product']"/>
+                                        </td>
+                                        <td style="border-right:solid 1px;">
+                                            <span t-esc="line['reference']"/>
+                                        </td>
+                                        <td class="text-right" style="border-right:solid 1px;">
+                                            <span t-esc="line['cost_price']"/>
+                                        </td>
+                                        <td class="text-right" style="border-right:solid 1px;">
+                                            <span t-esc="line['sale_price']"/>
+                                        </td>
+                                        <td class="text-right" style="border-right:solid 1px;">
+                                            <span t-esc="line['opening']"/>
+                                        </td>
+                                        <td class="text-right" style="border-right:solid 1px;">
+                                            <span t-esc="line['incooming_qty']"/>
+                                        </td>
+                                        <td class="text-right" style="border-right:solid 1px;">
+                                            <span t-esc="line['outgoing_qty']"/>
+                                        </td>
+                                        <td class="text-right" style="border-right:solid 1px;">
+                                            <span t-esc="line['internal_qty']"/>
+                                        </td>
+
+                                        <td class="text-right" style="border-right:solid 1px;">
+                                            <span t-esc="line['purchase_count']"/>
+                                        </td>
+                                        <td style="border-right:solid 1px;">
+                                            <span t-esc="line['last_purchase_date']"/>
+                                        </td>
+                                        <td class="text-right" style="border-right:solid 1px;">
+                                            <span t-esc="line['sale_count']"/>
+                                        </td>
+                                        <td style="border-right:solid 1px;">
+                                            <span t-esc="line['last_sale_date']"/>
+                                        </td>
+                                        <td class="text-right" style="border-right:solid 1px;">
+                                            <span t-esc="line['ending']"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </t>
+                        </tbody>
+                    </table>
+                </t>
+            </div>
+        </t>
+        </t>
+    </template>
+
+    <report 
+        id="action_report_stock_rotation"
+        string="Stock Rotation Report"
+        model="stock.move"
+        report_type="qweb-pdf"
+        file="cit_stock_rotation_report.report_stock_rotation"
+        name="cit_stock_rotation_report.report_stock_rotation"
+        menu="False" />
+
+    <record id="paperformat_stock_rotation" model="report.paperformat">
+        <field name="name">Stock Rotation</field>
+        <field name="default" eval="True"/>
+        <field name="format">custom</field>
+        <field name="page_height">297</field>
+        <field name="page_width">210</field>
+        <field name="orientation">Landscape</field>
+        <field name="margin_top">40</field>
+        <field name="margin_bottom">23</field>
+        <field name="margin_left">5</field>
+        <field name="margin_right">5</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">38</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <record id="action_report_stock_rotation" model="ir.actions.report">
+        <field name="paperformat_id" ref="paperformat_stock_rotation"/>
+    </record>
+
+</odoo>

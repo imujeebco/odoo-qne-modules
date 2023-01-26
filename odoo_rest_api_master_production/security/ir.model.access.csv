@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_vendor_prices_setup,vendor_prices_setup,model_vendor_prices_setup,,1,1,1,1
+access_api_requests,api.requests,model_api_requests,,1,1,1,1

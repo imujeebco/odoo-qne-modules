@@ -1,0 +1,39 @@
+<odoo>
+  <data>
+
+   <record id="sale_order_tree_inherit_form_premier_id" model="ir.ui.view">
+        <field name="name">sale.order.tree.inherit.premier_id</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='date_order']" position="after">
+                    <field name="premier_order_id"/> <!--if mto then required-->
+            </xpath>
+        </field></record>
+      <record id="sale_order_quotation_tree_inherit_form_premier_id" model="ir.ui.view">
+        <field name="name">sale.order.sale_order_quotation_tree_inherit_form_premier_id</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_quotation_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='create_date']" position="after">
+                    <field name="premier_order_id"/> <!--if mto then required-->
+            </xpath>
+        </field></record>
+
+    <record id="sale_order_line_inherit_form_vendor" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit.distributor</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+               <xpath expr="//notebook/page/field[@name='order_line']/tree/field[@name='product_id']" position="after">
+                <field name="vendor_id"/> <!--if mto then required-->
+               </xpath>
+                            <xpath expr="//field[@name='date_order']" position="after">
+                    <field name="premier_order_id"/> <!--if mto then required-->
+               </xpath>
+
+
+        </field></record>
+  </data>
+
+</odoo>
