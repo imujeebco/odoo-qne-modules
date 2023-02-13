@@ -1,0 +1,3 @@
+[submodule "odoo-qne-modules"]
+	path = odoo-qne-modules
+	url = https://imujeebco@github.com/imujeebco/odoo-qne-modules.git
