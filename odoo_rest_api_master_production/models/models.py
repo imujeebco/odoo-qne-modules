@@ -72,7 +72,7 @@ class PartnerExt(models.Model):
     def create(self, vals):
         res = super(PartnerExt, self).create(vals)
         if  res.imported_data == False:
-            url = "https://qnepk.com/odoo_services/submit_vendor.php"
+            url = "https://staging.qnepk.com/odoo_services/submit_vendor.php"
             try :
                 params = {'odoo_vendor_id': res.id, 'distributor_type': res.distributor_type, 'vendor': res.name,
                           'odoo_wh_id': res.warehouse_id.id}
@@ -115,7 +115,7 @@ class PartnerExt(models.Model):
 #     def create(self, vals):
 #         res = super(WarehouseExt, self).create(vals)
 #         print(res)
-#         # url = "https://qnepk.com/odoo_testing_services/submit_vendor.php"
+#         # url = "https://staging.qnepk.com/odoo_testing_services/submit_vendor.php"
 #         # params = {'odoo_vendor_id': res.id, 'distributor_type': res.distributor_type, 'vendor': res.name}
 #         # response = requests.request("POST", url, headers={}, data=params)
 #         return res
@@ -239,7 +239,7 @@ class PickingExt(models.Model):
 
 
     def update_qty_web_hook(self, qty, product_id):
-        url = "https://qnepk.com/odoo_services/submit_stock_webhook.php"
+        url = "https://staging.qnepk.com/odoo_services/submit_stock_webhook.php"
         params = {'odoo_vendor_id': 320,
                   'odoo_wh_id': 1,
                   'odoo_prod_id': product_id,
@@ -367,7 +367,7 @@ class PickingExt(models.Model):
             pickings_to_backorder = self
         # pickings_not_to_backorder.with_context(cancel_backorder=True).action_done()
         # pickings_to_backorder.with_context(cancel_backorder=False).action_done()
-        url = "https://qnepk.com/odoo_services/submit_stock.php"
+        url = "https://staging.qnepk.com/odoo_services/submit_stock.php"
         if self.picking_type_code == "incoming":
             try:
                 import requests
@@ -527,7 +527,7 @@ class SaleOrder(models.Model):
         return res
 
     def update_qty_web_hook(self, qty, product_id):
-        url = "https://qnepk.com/odoo_services/submit_stock_webhook.php"
+        url = "https://staging.qnepk.com/odoo_services/submit_stock_webhook.php"
         params = {'odoo_vendor_id': 320,
                   'odoo_wh_id': 1,
                   'odoo_prod_id': product_id,
@@ -655,7 +655,7 @@ class ProductCustom(models.Model):
 #
 #         return res
 #     def update_qty_web_hook_invoice(self, qty, product_id ):
-#         url = "https://qnepk.com/odoo_services/submit_stock_webhook.php"
+#         url = "https://staging.qnepk.com/odoo_services/submit_stock_webhook.php"
 #         params = {'odoo_vendor_id': 320,
 #                   'odoo_wh_id': 1,
 #                   'odoo_prod_id': product_id,
